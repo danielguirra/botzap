@@ -44,7 +44,7 @@ function verifyEmployee(eemployee: newEmployee) {
    if (typeof eemployee.office != 'string') throw new Error('office not string type');
    if (typeof eemployee.telephone != 'string') throw new Error('telephone not string type');
    if (typeof eemployee.wage != 'number') throw new Error('wage not string type');
-   if (typeof eemployee.CPF != 'number' || eemployee.CPF.toString().length < 11) throw new Error('CPF not number type');
+   if (typeof eemployee.CPF != 'number' || eemployee.CPF.toString().length < 11) throw new Error('CPF not number type or does not have 11 elements CPF: ' + eemployee.CPF + ' length: ' + eemployee.CPF.toString().length);
    return eemployee
 }
 

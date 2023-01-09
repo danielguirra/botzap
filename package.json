@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node ./dist/server",
-    "migrations": "npx run build && node ./dist/database/migrations/runner.js"
+    "migrations": "node ./dist/database/src/migrations/runner.js"
   },
   "author": "",
   "license": "ISC",

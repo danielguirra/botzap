@@ -1,3 +1,3 @@
-import createTableEmployee from './create_table_employee';
+import createDataBase from './create_database';
 
-createTableEmployee
+createDataBase
