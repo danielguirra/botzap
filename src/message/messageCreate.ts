@@ -1,23 +1,15 @@
-import { MessageMedia } from 'whatsapp-web.js';
+
 
 import { client } from '../client/client';
 import { messageBuilder } from './builder';
 
+
 export const message_create = client.on("message_create", async (message) => {
 
-
    try {
-      const index = messageBodyVerifator(message.body)
-      if (typeof index === 'number' && index >= 0) {
-         const command = messageBuilder[index]
-         if (command.url) {
-            message.reply(await MessageMedia.fromUrl(
-               command.url
-            ));
-         } if (command.content) {
-            message.reply(command.content)
-         }
-      }
+      const finder = findParam(message.body)
+      if (finder === 'não existe um comando como esse') return
+      else finder(message)
 
    } catch (error) {
       console.log(error)
@@ -26,16 +18,12 @@ export const message_create = client.on("message_create", async (message) => {
 });
 
 
-function messageBodyVerifator(body: string) {
-   let indexCommand
+function findParam(param) {
    for (let index = 0; index < messageBuilder.length; index++) {
       const element = messageBuilder[index];
-      if (body.replace('*', '') === element.param) {
-         indexCommand = index
-         console.log('Command usado ' + element.param)
-      }
-
+      if (element.param === param) {
+         return element.func
+      } else continue
    }
-
-   return indexCommand
+   return 'não existe um comando como esse'
 }
