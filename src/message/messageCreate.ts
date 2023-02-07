@@ -3,6 +3,7 @@
 import { client } from '../client/client';
 import { messageBuilder } from './builder';
 
+let status: 'on' | 'off'
 
 export const message_create = client.on("message_create", async (message) => {
 
@@ -23,7 +24,15 @@ function findParam(param) {
       const element = messageBuilder[index];
       if (element.param === param) {
          return element.func
-      } else continue
+      } else {
+         if (element.alias)
+            element.alias.forEach((value => {
+               if (value === param) {
+                  return element.func
+               }
+            }))
+         else continue
+      } continue
    }
    return 'não existe um comando como esse'
 }
