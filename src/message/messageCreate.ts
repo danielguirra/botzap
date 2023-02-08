@@ -1,19 +1,25 @@
+import * as fs from 'fs';
+
 import { client } from '../client/client';
 import { messageBuilder } from './builder';
 
-
-
 export let status = process.env.status
+export let buttonInAtive = process.env.button
+export let inCollect
 let wellcomeStatus = false
 
 export const message_create = client.on("message_create", async (message) => {
 
    try {
-      status = 'off'
       let chat = await message.getChat()
-      if (message.getChat()) {
-         console.log(chat)
+      if (chat.name !== 'Eu') {
+         return
       }
+      if (inCollect === true) {
+         
+         fs.writeFileSync(`./cache/${chat.id.user}.txt`,(message.body))
+      }
+      
 
       if (message.body === 'sair' || message.body === '!sair') {
          status = 'off'
@@ -33,12 +39,30 @@ export const message_create = client.on("message_create", async (message) => {
          let msg = message.body.replace('!', '')
          const finder = findParam(msg)
          if (finder === 'não existe um comando como esse') return
-         else finder(message)
+         else if ('buttons' in finder) {
+            finder.func(message)
+            buttonInAtive='true'
+         } else {
+            finder(message)
+         }
          setTimeout(() => {
             status = 'off'
             client.sendMessage(message.to, 'Sessão encerrada')
          }, 60000 * 5);
-      } return
+      } else if(buttonInAtive==='true'){
+         const finder = findParam(message.body)
+         if (finder === 'não existe um comando como esse') return
+         else if ('buttons' in finder) {
+            finder.func(message)
+            buttonInAtive = 'true'
+         } else {
+            finder(message)
+         }
+         setTimeout(() => {
+            status = 'off'
+            client.sendMessage(message.to, 'Sessão encerrada')
+         }, 60000 * 5);
+      }return
 
 
 
@@ -53,7 +77,12 @@ function findParam(param) {
    for (let index = 0; index < messageBuilder.length; index++) {
       const element = messageBuilder[index];
       if (element.param === param) {
-         return element.func
+         if (element.buttons) {
+            return {
+               func: element.func,
+               buttons:true
+            }
+         } return element.func
       } else {
          if (element.alias)
             element.alias.forEach((value => {
@@ -65,4 +94,13 @@ function findParam(param) {
       } continue
    }
    return 'não existe um comando como esse'
+}
+
+
+export function onCollect() {
+   inCollect=true
+}
+
+export function offCollect() {
+   inCollect = false
 }
