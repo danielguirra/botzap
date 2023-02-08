@@ -1,6 +1,6 @@
-import { MessageInterface } from '../../interface/MessageInterface';
+// import { MessageInterface } from '../../interface/MessageInterface';
 
-export const commmandPing: MessageInterface = {
-   param: 'ping',
-   content: "pong"
-}
+// export const commmandPing: MessageInterface = {
+//    param: 'ping',
+//    content: "pong"
+// }

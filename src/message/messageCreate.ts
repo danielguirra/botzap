@@ -4,11 +4,17 @@ import { messageBuilder } from './builder';
 
 
 export let status = process.env.status
-let wellcomeStatus = true
+let wellcomeStatus = false
 
 export const message_create = client.on("message_create", async (message) => {
 
    try {
+      status = 'off'
+      let chat = await message.getChat()
+      if (message.getChat()) {
+         console.log(chat)
+      }
+
       if (message.body === 'sair' || message.body === '!sair') {
          status = 'off'
          await client.sendMessage(message.to, 'Sessão encerrada 👋')
