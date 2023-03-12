@@ -5,7 +5,7 @@ import { messageBuilder } from './builder';
 
 export let status = process.env.status
 export let buttonInAtive = process.env.button
-export let inCollect
+export let inCollect:string|undefined|boolean
 let wellcomeStatus = false
 
 export const message_create = client.on("message_create", async (message) => {
