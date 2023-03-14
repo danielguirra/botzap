@@ -1,4 +1,4 @@
-import { client } from '../../../client/client';
+import { client } from '../../../../client/client';
 import { Command } from 'src/interface/MessageInterface';
 import { Buttons } from 'whatsapp-web.js';
 

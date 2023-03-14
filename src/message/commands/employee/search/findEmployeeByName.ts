@@ -1,11 +1,10 @@
 import axios from "axios";
-import * as fs from "fs";
 import WAWebJS, { List } from "whatsapp-web.js";
 
-import { URL_API } from "../../../client/client";
-import Employee from "../../../interface/Employee";
-import { Command } from "../../../interface/MessageInterface";
-import { messagesCollectArray, offCollect, onCollect } from "../../messageCreate";
+import { URL_API } from "../../../../client/client";
+import Employee from "../../../../interface/Employee";
+import { Command } from "../../../../interface/MessageInterface";
+import { messagesCollectArray, offCollect, onCollect } from "../../../messageCreate";
 
 export const findEmployeeByName: Command = {
   param: "Procurar Empregado Por Nome",

@@ -1,7 +1,7 @@
 import { capivaraCommand } from './commands/capivara';
 import { commandEmployeeBase } from './commands/employee/Employee';
-import { findEmployee } from './commands/employee/findEmployee';
-import { findEmployeeByName } from './commands/employee/findEmployeeByName';
+import { findEmployee } from './commands/employee/finder/findEmployee';
+import { findEmployeeByName } from './commands/employee/finder/findEmployeeByName';
 
 
 
