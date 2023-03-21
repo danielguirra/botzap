@@ -9,6 +9,7 @@ import { messagesCollectArray, offCollect, onCollect } from "../../../messageCre
 export const findEmployeeByName: Command = {
   param: "Procurar Empregado Por Nome",
   buttons: true,
+  alias: "findEmployeeByName",
   func: async function findEmployeeByName(message) {
     const chat = await message.getChat();
     await chat.sendMessage("Digite o primeiro nome do funcionario");

@@ -3,20 +3,26 @@ import WAWebJS, { Buttons } from 'whatsapp-web.js';
 import { client } from '../client/client';
 import { messageBuilder } from './builder';
 
+
+export type messageCollect = {
+   id: WAWebJS.ChatId,
+   content: string
+}
+
+
 export let status = process.env.status
 export let buttonInAtive = process.env.button
 export let inCollect: string | undefined | boolean
-export const messagesCollectArray: {
-   id: WAWebJS.ChatId
-   , content: string
-}[] = []
+export const messagesCollectArray: messageCollect[] = []
 let wellcomeStatus = true
 
 export const message_create = client.on("message_create", async (message) => {
 
    try {
       let chat = await message.getChat()
+
       if (chat.id._serialized !== '5516999677829@c.us') {
+
          return
       }
       if (inCollect === true) {
@@ -26,7 +32,6 @@ export const message_create = client.on("message_create", async (message) => {
          })
 
       }
-
 
       if (message.body === 'sair' || message.body === '!sair') {
          status = 'off'
@@ -38,7 +43,7 @@ export const message_create = client.on("message_create", async (message) => {
                wellcomeStatus = true
             }, 6000);
          } catch (error) {
-            console.log(message)
+            console.log(message.type)
             console.log(error.message)
          }
       }
@@ -51,33 +56,27 @@ export const message_create = client.on("message_create", async (message) => {
       }
 
 
+      let param = message.body
+      if (param.startsWith('!')) {
+         param = param.replace('!', '')
+         const finder = findParam(param)
+         if (finder === 'não existe um comando como esse') {
+            return await message.reply(finder)
+         }
+         await finder(message)
+         timeoutEnd(message);
+      }
+      if (message.selectedButtonId) param = param.toLowerCase()
+
+
       if (!wellcomeStatus) {
-         if (message.body.startsWith('!')) {
-            let msg = message.body.replace('!', '')
-            const finder = findParam(msg)
-            if (finder === 'não existe um comando como esse') {
-               return await message.reply(finder)
-            }
-            if ('buttons' in finder) {
-               buttonInAtive = 'true'
-               return await finder.func(message)
-            }
-
-            await finder(message)
-            timeoutEnd(message);
-         } if (buttonInAtive === 'true') {
+         if (message.selectedButtonId) {
             if (message.id.fromMe) return
-            const finder = findParam(message.body)
-
+            const finder = findParam(message.selectedButtonId, true)
             if (finder === 'não existe um comando como esse') {
                return
             }
-            if ('buttons' in finder) {
-               return await finder.func(message)
-            }
-
             await finder(message)
-
             timeoutEnd(message);
             buttonInAtive = 'false'
          }
@@ -99,23 +98,23 @@ function timeoutEnd(message) {
    }, 60000 * 5);
 }
 
-function findParam(param) {
+function findParam(param: string, button?: boolean) {
+
+   if (button) {
+      for (let index = 0; index < messageBuilder.length; index++) {
+         const command = messageBuilder[index];
+         if (param === command.alias) {
+            return command.func
+         }
+      }
+      return 'não existe um comando como esse'
+   }
+
    for (let index = 0; index < messageBuilder.length; index++) {
       const element = messageBuilder[index];
       if (element.param === param) {
-         if (element.buttons) {
-            return element
-
-         } return element.func
-      } else {
-         if (element.alias)
-            element.alias.forEach((value => {
-               if (value === param) {
-                  return element.func
-               }
-            }))
-         else continue
-      } continue
+         return element.func
+      }
    }
    return 'não existe um comando como esse'
 }
