@@ -1,5 +1,4 @@
 
-```markdown
 # BotZap
 
 BotZap é um aplicativo de chatbot simples e leve para automatizar tarefas em plataformas de mensagens populares como o WhatsApp.
