@@ -1,4 +1,3 @@
-Desculpe pela confusão. Aqui está o README completo para o seu repositório BotZap:
 
 ```markdown
 # BotZap
