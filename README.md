@@ -55,10 +55,8 @@ Este projeto foi inspirado pela necessidade de automação de chatbots simples e
 
 ## Contato
 
-Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para [abrir um problema](https://github.com/danielguirra/botzap/issues) ou [entrar em contato](mailto:seuemail@exemplo.com).
+Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para [abrir um problema](https://github.com/danielguirra/botzap/issues) ou [entrar em contato](mailto:daniel.guirra777@gmail.com).
 
-Feliz BotZap-ing!
 
 ```
 
-Certifique-se de substituir os espaços reservados, como `<seu-email>`, e quaisquer outros detalhes específicos, pelas suas informações. Este README fornece uma estrutura básica para o seu projeto, e você pode expandi-lo para adicionar mais informações conforme necessário.
