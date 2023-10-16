@@ -26,7 +26,7 @@ Para começar com o BotZap, siga estas etapas:
    npm install
    ```
 
-3. Configure o seu bot editando o arquivo `config.js`.
+3. Configure o seu bot editando o arquivo `config.ts`.
 
 4. Execute o bot:
 
